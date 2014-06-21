@@ -15,4 +15,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/p4.mk
+    $(LOCAL_DIR)/omni_p4.mk
