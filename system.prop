@@ -6,6 +6,12 @@ rild.libpath=/system/lib/libsec-ril.so
 rild.libargs=-d /dev/ttyS0
 keyguard.no_require_sim=yes
 
+# screenshot flag
+ro.bq.gpu_to_cpu_unsupported = 1
+
+# bootloop fix
+sys.disable_ext_animation=1
+
 ro.com.google.clientidbase=android-samsung
 ro.com.google.clientidbase.gmm=android-samsung
 ro.com.google.clientidbase.yt=android-samsung
