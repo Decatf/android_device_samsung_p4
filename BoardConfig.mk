@@ -31,3 +31,5 @@ TARGET_KERNEL_CONFIG := cyanogenmod_samsung_p4-jb_defconfig
 # Keep this as a fallback
 # TARGET_PREBUILT_KERNEL := device/samsung/p4/kernel
 
+# RIL
+BOARD_RIL_CLASS := ../../../device/samsung/p4/ril/
