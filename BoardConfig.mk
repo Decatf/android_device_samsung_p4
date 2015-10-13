@@ -35,6 +35,7 @@ TARGET_KERNEL_CONFIG := cyanogenmod_samsung_p4-jb_defconfig
 # BOARD_RIL_CLASS := ../../../device/samsung/p4/ril/
 
 # libril from hardware/samsung
+BOARD_VENDOR := samsung
 BOARD_PROVIDES_LIBRIL := true
 BOARD_MODEM_TYPE := xmm6260
 TARGET_SPECIFIC_HEADER_PATH := device/samsung/p4/include
