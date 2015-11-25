@@ -14,7 +14,7 @@
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ril/cbd:root/sbin/cbd \
-    $(LOCAL_PATH)/gps.xml:system/etc/gps.xml
+    $(LOCAL_PATH)/gpsconfig.xml:system/etc/gpsconfig.xml
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
 
