@@ -14,7 +14,7 @@
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ril/cbd:system/bin/cbd \
-    $(LOCAL_PATH)/gpsconfig.xml:system/etc/gpsconfig.xml
+    $(LOCAL_PATH)/gps.xml:system/etc/gps.xml
 
 # Cameradata
 PRODUCT_COPY_FILES += \
