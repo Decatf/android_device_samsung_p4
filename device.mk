@@ -42,3 +42,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # GPS config
 PRODUCT_PROPERTY_OVERRIDES += \
   my.gps=novzw
+
+PRODUCT_PACKAGES := \
+    dmitry-ril
