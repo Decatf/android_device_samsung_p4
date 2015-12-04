@@ -39,9 +39,5 @@ DEVICE_PACKAGE_OVERLAYS += \
 PRODUCT_PROPERTY_OVERRIDES += \
   ro.telephony.ril_class=SamsungExynos4RIL
 
-# GPS config
-PRODUCT_PROPERTY_OVERRIDES += \
-  my.gps=novzw
-
 PRODUCT_PACKAGES := \
     dmitry-ril
