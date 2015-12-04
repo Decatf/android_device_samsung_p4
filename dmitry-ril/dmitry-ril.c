@@ -22,32 +22,32 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-#define REAL_RIL_NAME				"/system/vendor/lib/libsec-ril.so"
+#define REAL_RIL_NAME				"/system/lib/libsec-ril.so"
 
 
 static RIL_RadioFunctions const *mRealRadioFuncs;
 static const struct RIL_Env *mEnv;
 
 //callbacks for android to call
-static void rilOnRequest(int request, void *data, size_t datalen, RIL_Token t)
-{
-	switch (request) {
-		case RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING:
-			//we fake this and never even send it to the real RIL
-			RLOGW("Faking reply to RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING\n");
-			mEnv->OnRequestComplete(t, RIL_E_SUCCESS, NULL, 0);
-			break;
+// static void rilOnRequest(int request, void *data, size_t datalen, RIL_Token t)
+// {
+// 	switch (request) {
+// 		case RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING:
+// 			//we fake this and never even send it to the real RIL
+// 			RLOGW("Faking reply to RIL_REQUEST_REPORT_STK_SERVICE_IS_RUNNING\n");
+// 			mEnv->OnRequestComplete(t, RIL_E_SUCCESS, NULL, 0);
+// 			break;
 		
-		case RIL_REQUEST_SIM_OPEN_CHANNEL:
-			//we fake this and never even send it to the real RIL
-			RLOGW("Faking reply to RIL_REQUEST_SIM_OPEN_CHANNEL\n");
-			mEnv->OnRequestComplete(t, RIL_E_GENERIC_FAILURE, NULL, 0);
-			break;
+// 		case RIL_REQUEST_SIM_OPEN_CHANNEL:
+// 			//we fake this and never even send it to the real RIL
+// 			RLOGW("Faking reply to RIL_REQUEST_SIM_OPEN_CHANNEL\n");
+// 			mEnv->OnRequestComplete(t, RIL_E_GENERIC_FAILURE, NULL, 0);
+// 			break;
 		
-		default:
-			mRealRadioFuncs->onRequest(request, data, datalen, t);
-	}
-}
+// 		default:
+// 			mRealRadioFuncs->onRequest(request, data, datalen, t);
+// 	}
+// }
 
 const RIL_RadioFunctions* RIL_Init(const struct RIL_Env *env, int argc, char **argv)
 {
@@ -95,13 +95,13 @@ const RIL_RadioFunctions* RIL_Init(const struct RIL_Env *env, int argc, char **a
 	
 	//copy the real RIL's info struct, then replace the onRequest pointer with our own
 	rilInfo = *mRealRadioFuncs;
-	rilInfo.onRequest = rilOnRequest;
+	// rilInfo.onRequest = rilOnRequest;
 	
 	//show the real RIl's version
 	RLOGD("Real RIL version is '%s'\n", mRealRadioFuncs->getVersion());
 	
-	RLOGI("Crespo RIL interposition library by me@dmitry.gr loaded\n");
-	ALOGI("Crespo RIL interposition library by me@dmitry.gr loaded\n");
+	RLOGI("P4 RIL interposition library by me@dmitry.gr loaded\n");
+	ALOGI("P4 RIL interposition library by me@dmitry.gr loaded\n");
 	
 	//we're all good - return to caller
 	return &rilInfo;
