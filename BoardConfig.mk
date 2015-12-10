@@ -34,3 +34,4 @@ TARGET_KERNEL_CONFIG := cyanogenmod_samsung_p4-jb_defconfig
 
 # RIL
 BOARD_RIL_CLASS := ../../../device/samsung/p4/ril/
+COMMON_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
