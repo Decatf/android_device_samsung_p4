@@ -42,9 +42,9 @@ DEVICE_PACKAGE_OVERLAYS += \
 PRODUCT_PROPERTY_OVERRIDES += \
   ro.telephony.ril_class=SamsungExynos4RIL
 
-PRODUCT_PACKAGES := \
+PRODUCT_PACKAGES += \
     init.modem.rc
 
-PRODUCT_PACKAGES := \
+PRODUCT_PACKAGES += \
     dmitry-ril \
     hwrevision
