@@ -1,0 +1,11 @@
+
+service hwrev-parser /sbin/hwrevision
+    class core
+    user root
+    group root
+    oneshot
+
+service cpboot-daemon /sbin/cbd -d -o t -p 7
+    class main
+    user root
+    group radio cache inet misc audio sdcard_rw log
