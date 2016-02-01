@@ -22,7 +22,7 @@
 
 LOCAL_PATH := $(call my-dir)
 
-ifeq ($(TARGET_PRODUCT)), p4)
+ifeq ($(TARGET_PRODUCT),p4)
 
 include $(CLEAR_VARS)
 include $(call all-makefiles-under,$(LOCAL_PATH))
