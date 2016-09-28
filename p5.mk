@@ -12,31 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifeq ($(TARGET_PREBUILT_KERNEL),)
-	LOCAL_KERNEL := $(LOCAL_PATH)/kernel
-else
-	LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)
-endif
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_KERNEL):kernel
-
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
 
 # The gps config appropriate for this device
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
 
-$(call inherit-product, device/samsung/p5-common/p5-common.mk)
-
+$(call inherit-product, device/samsung/p4-common/p4-common.mk)
+$(call inherit-product, device/samsung/p5/device.mk)
 $(call inherit-product-if-exists, vendor/samsung/p5/p5-vendor.mk)
 
-DEVICE_PACKAGE_OVERLAYS += \
-    $(LOCAL_PATH)/overlay
-
-PRODUCT_PACKAGES += \
-  Mms
-
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := p5
+PRODUCT_BRAND := Samsung
 PRODUCT_DEVICE := p5
-PRODUCT_MODEL := p5
+PRODUCT_MODEL := GT-P7300
+PRODUCT_MANUFACTURER := Samsung

@@ -15,3 +15,9 @@ ro.telephony.sends_barcount=1
 ro.com.google.clientidbase=android-samsung
 ro.com.google.clientidbase.gmm=android-samsung
 ro.com.google.clientidbase.yt=android-samsung
+
+# screenshot flag
+ro.bq.gpu_to_cpu_unsupported = 1
+
+# bootloop fix
+sys.disable_ext_animation=1
