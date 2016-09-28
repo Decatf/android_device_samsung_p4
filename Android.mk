@@ -22,6 +22,9 @@
 
 LOCAL_PATH := $(call my-dir)
 
-include $(CLEAR_VARS)
+ifeq ($(TARGET_PRODUCT),p5)
 
+include $(CLEAR_VARS)
 include $(call all-makefiles-under,$(LOCAL_PATH))
+
+endif
