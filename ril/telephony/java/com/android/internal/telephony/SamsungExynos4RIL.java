@@ -139,7 +139,7 @@ public class SamsungExynos4RIL extends RIL implements CommandsInterface {
     }
 
     @Override
-    protected RILRequest processSolicited (Parcel p) {
+    protected RILRequest processSolicited (Parcel p, int type) {
         int serial, error;
         boolean found = false;
 
@@ -414,7 +414,7 @@ public class SamsungExynos4RIL extends RIL implements CommandsInterface {
 
     @Override
     protected void
-    processUnsolicited (Parcel p) {
+    processUnsolicited (Parcel p, int type) {
         int dataPosition = p.dataPosition();
         int response = p.readInt();
 
@@ -439,7 +439,7 @@ public class SamsungExynos4RIL extends RIL implements CommandsInterface {
                 p.setDataPosition(dataPosition);
 
                 // Forward responses that we are not overriding to the super class
-                super.processUnsolicited(p);
+                super.processUnsolicited(p, type);
                 return;
         }
 
