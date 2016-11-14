@@ -8,4 +8,4 @@ service hwrev-parser /sbin/hwrevision
 service cpboot-daemon /sbin/cbd -d -o t -p 7
     class main
     user root
-    group radio cache inet misc audio sdcard_rw log
+    group radio cache inet misc audio sdcard_rw log readproc wakelock
