@@ -2,7 +2,7 @@
 service hwrev-parser /sbin/hwrevision
     class core
     user root
-    group root
+    group root readproc
     oneshot
 
 service cpboot-daemon /sbin/cbd -d -o t -p 7
