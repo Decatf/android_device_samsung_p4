@@ -1,5 +1,5 @@
 
-service hwrev-parser /sbin/hwrevision
+service hwrev-parser /system/bin/hwrevision
     class core
     user root
     group root readproc
