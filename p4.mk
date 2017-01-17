@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
 # The gps config appropriate for this device
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
@@ -20,8 +20,6 @@ $(call inherit-product, device/common/gps/gps_us_supl.mk)
 $(call inherit-product, device/samsung/p4-common/p4-common.mk)
 $(call inherit-product, device/samsung/p4/device.mk)
 $(call inherit-product-if-exists, vendor/samsung/p4/p4-vendor.mk)
-
-$(call inherit-product, build/target/product/telephony.mk)
 
 PRODUCT_NAME := p4
 PRODUCT_BRAND := Samsung

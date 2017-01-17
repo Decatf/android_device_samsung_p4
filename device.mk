@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Get list of APNs
-PRODUCT_COPY_FILES += device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.xml
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ril/cbd:system/bin/cbd \
     $(LOCAL_PATH)/gpsconfig.xml:system/etc/gpsconfig.xml
