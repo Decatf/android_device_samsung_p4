@@ -7,8 +7,6 @@
 #include <telephony/ril.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#include <sys/cdefs.h>
-#include <utils/Log.h>
 #include <sys/stat.h>
 #include <pthread.h>
 #include <termios.h>
@@ -17,29 +15,18 @@
 #include <getopt.h>
 #include <string.h>
 #include <unistd.h>
-#include <dlfcn.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <inttypes.h>
 
-#include <telephony/ril_cdma_sms.h>
-#include <sys/system_properties.h>
-#include <telephony/librilutils.h>
-#include <cutils/sockets.h>
-#include <cutils/compiler.h>
-#include <telephony/ril.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <sys/cdefs.h>
-#include <utils/Log.h>
-#include <sys/stat.h>
+#include "dmitry-ril.h"
+
 #define REAL_RIL_NAME				"libsec-ril.so"
 
-
+/* A copy of the original RIL function table. */
 static RIL_RadioFunctions const *mRealRadioFuncs;
+
+/* A copy of the ril environment passed to RIL_Init. */
 static const struct RIL_Env *mEnv;
 
 //callbacks for android to call
@@ -62,6 +49,33 @@ static const struct RIL_Env *mEnv;
 // 			mRealRadioFuncs->onRequest(request, data, datalen, t);
 // 	}
 // }
+
+static void onRequestCompleteShim(RIL_Token t, RIL_Errno e, void *response, size_t responselen) {
+	int request;
+	RequestInfo *pRI;
+
+	pRI = (RequestInfo *)t;
+
+	/* If pRI is null, this entire function is useless. */
+	if (pRI == NULL)
+		goto null_token_exit;
+
+	request = pRI->pCI->requestNumber;
+
+	switch (request) {
+		case RIL_REQUEST_LAST_CALL_FAIL_CAUSE:
+			/* Remove extra element (ignored on pre-M, now crashing the framework) */
+			if (responselen > sizeof(int)) {
+				mEnv->OnRequestComplete(t, e, response, sizeof(int));
+				return;
+			}
+			break;
+	}
+
+	RLOGD("%s: got request %s: forwarded to libril.\n", __func__, requestToString(request));
+null_token_exit:
+	mEnv->OnRequestComplete(t, e, response, responselen);
+}
 
 static void patchMem(void *libHandle) {
 	/*
@@ -96,12 +110,14 @@ const RIL_RadioFunctions* RIL_Init(const struct RIL_Env *env, int argc, char **a
 {
 	RIL_RadioFunctions const* (*fRealRilInit)(const struct RIL_Env *env, int argc, char **argv);
 	static RIL_RadioFunctions rilInfo;
+	static struct RIL_Env shimmedEnv;
 	void *realRilLibHandle;
 	int i;
 
-
 	//save the env;
 	mEnv = env;
+	shimmedEnv = *env;
+	shimmedEnv.OnRequestComplete = onRequestCompleteShim;
 	
 	//get the real RIL
 	realRilLibHandle = dlopen(REAL_RIL_NAME, RTLD_LOCAL);
@@ -133,7 +149,7 @@ const RIL_RadioFunctions* RIL_Init(const struct RIL_Env *env, int argc, char **a
 	patchMem(realRilLibHandle);
 
 	//try to init the real ril
-	mRealRadioFuncs = fRealRilInit(env, argc, argv);
+	mRealRadioFuncs = fRealRilInit(&shimmedEnv, argc, argv);
 	if (!mRealRadioFuncs) {
 		RLOGE("The real RIL's entry point failed\n");
 		goto out_fail;
@@ -142,7 +158,7 @@ const RIL_RadioFunctions* RIL_Init(const struct RIL_Env *env, int argc, char **a
 	//copy the real RIL's info struct, then replace the onRequest pointer with our own
 	rilInfo = *mRealRadioFuncs;
 	// rilInfo.onRequest = rilOnRequest;
-	
+
 	//show the real RIl's version
 	RLOGD("Real RIL version is '%s'\n", mRealRadioFuncs->getVersion());
 	
