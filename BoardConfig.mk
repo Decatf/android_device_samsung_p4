@@ -27,10 +27,10 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 606076928
 BOARD_CACHEIMAGE_PARTITION_SIZE := 462317159
 
 # Try to build the kernel
-# TARGET_KERNEL_SOURCE := kernel/samsung/p4
-# TARGET_KERNEL_CONFIG := cyanogenmod_samsung_p5-jb_defconfig
+TARGET_KERNEL_SOURCE := kernel/samsung/p5
+TARGET_KERNEL_CONFIG := cyanogenmod_samsung_p5-jb_defconfig
 # Keep this as a fallback
-TARGET_PREBUILT_KERNEL := device/samsung/p5/twrp_kernel
+# TARGET_PREBUILT_KERNEL := device/samsung/p5/kernel
 
 TARGET_OTA_ASSERT_DEVICE := p5,GT-P7300
 
