@@ -12,6 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/ril/cbd:system/bin/cbd \
+    $(LOCAL_PATH)/gps.xml:system/etc/gps.xml
+
 # Cameradata
 PRODUCT_COPY_FILES += \
     device/samsung/p4-common/camera/cameradata/back_camera_test_pattern.yuv:system/cameradata/back_camera_test_pattern.yuv \
@@ -31,11 +35,13 @@ PRODUCT_COPY_FILES += \
 DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay
 
-PRODUCT_COPY_FILES += \
-     $(LOCAL_PATH)/gpsconfig.xml:system/etc/gpsconfig.xml
-
-#PRODUCT_PROPERTY_OVERRIDES += \
-#    ro.carrier=wifi-only
+# RIL
+PRODUCT_PROPERTY_OVERRIDES += \
+  ro.telephony.ril_class=SamsungExynos4RIL
 
 PRODUCT_PACKAGES += \
     init.modem.rc
+
+PRODUCT_PACKAGES += \
+    dmitry-ril \
+    hwrevision
